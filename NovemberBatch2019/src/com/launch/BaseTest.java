@@ -8,6 +8,9 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 public class BaseTest 
 {
@@ -31,8 +34,16 @@ public class BaseTest
 			System.setProperty("webdriver.chrome.driver", projectPath+"\\drivers\\chromedriver.exe");
 			driver = new ChromeDriver();
 		}else if(p.getProperty(browser).equals("firefox")){
+			
 			System.setProperty("webdriver.gecko.driver", projectPath+"\\geckodriver.exe");
-			driver = new FirefoxDriver();
+			
+			ProfilesIni p=new ProfilesIni();
+			FirefoxProfile profile = p.getProfile("novemberprofile");
+			
+			FirefoxOptions option = new FirefoxOptions();
+			option.setProfile(profile);
+			
+			driver = new FirefoxDriver(option);
 		}
 	}
 	
